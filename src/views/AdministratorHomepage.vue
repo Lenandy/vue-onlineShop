@@ -67,6 +67,7 @@ import { ref } from 'vue';
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(['1']);
 </script>
+
 <style scoped>
 #components-layout-demo-side .logo {
   height: 32px;
@@ -79,5 +80,22 @@ const selectedKeys = ref<string[]>(['1']);
 }
 [data-theme='dark'] .site-layout .site-layout-background {
   background: #141414;
+}
+.ant-layout-header {
+  height: auto !important; /* 或者设置为您想要的具体高度 */
+  padding: 0; /* 如果需要移除原有的内边距 */
+}
+
+</style>
+<style scoped>
+:deep(.md\:p-10) {
+  @media (min-width: 768px) {
+    padding: 0 !important;
+  }
+}
+:deep(.p-5) {
+  @media (min-width: 768px) {
+    padding: 0 !important;
+  }
 }
 </style>

@@ -1,0 +1,8 @@
+@media (min-width: 768px) {
+    .md\:p-10 {
+        padding: 0 !important;
+    }
+    .p-5 {
+        padding: 0 !important;
+    }
+}

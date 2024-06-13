@@ -11,16 +11,19 @@ const router = createRouter({
       path: "/",
       name: "shop",
       component: ShopView,
+      meta: { hideHeader: false },
     },
     {
       path: "/item/:id",
       name: "item",
       component: ItemView,
+      meta: { hideHeader: false },
     },
     {
       path: "/cart",
       name: "cart",
       component: CartView,
+      meta: { hideHeader: false },
     },
     {
       path: "/ad_homepage",

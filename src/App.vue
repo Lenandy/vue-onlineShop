@@ -7,10 +7,18 @@
 
 <script setup>
 import { RouterView, useRoute } from 'vue-router';
+import { ref, watchEffect } from 'vue'; // 导入Vue的响应式API和副作用函数
 import SiteHeader from './components/SiteHeader.vue';
+
 const route = useRoute();
-const shouldHideHeader = route.meta.hideHeader
-console.log('shouldHideHeader:', shouldHideHeader);
+const shouldHideHeader = ref(false); // 使用ref定义响应式数据
+
+const updateShouldHideHeader = () => {
+  shouldHideHeader.value = route.meta?.hideHeader ?? false;
+  console.log('shouldHideHeader updated:', shouldHideHeader.value);
+};
+
+watchEffect(() => {
+  updateShouldHideHeader();
+});
 </script>
-
-
