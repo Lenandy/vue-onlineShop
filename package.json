@@ -21,6 +21,7 @@
   "homepage": "https://github.com/travishorn/vue-online-store-demo#readme",
   "dependencies": {
     "@heroicons/vue": "^2.0.13",
+    "ant-design-vue": "^4.2.3",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
