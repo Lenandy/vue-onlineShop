@@ -3,6 +3,7 @@ import ShopView from "../views/ShopView.vue";
 import ItemView from "../views/ItemView.vue";
 import CartView from "../views/CartView.vue";
 import AdministratorHomepage from "../views/AdministratorHomepage.vue";
+import login from "../views/login.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,12 @@ const router = createRouter({
       path: "/ad_homepage",
       name: "ad_homepage",
       component: AdministratorHomepage,
+      meta: { hideHeader: true },
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: login,
       meta: { hideHeader: true },
     }
   ]
