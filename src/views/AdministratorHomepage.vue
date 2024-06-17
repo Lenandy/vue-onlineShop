@@ -12,6 +12,7 @@
     <a-layout>
       <a-layout-content style="margin: 0 16px">
         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px', minWidth: '500px', overflowY: 'auto' }">
+          <DashBoard v-if="activeTab === 'dash'" />
           <type-management-table v-if="activeTab === 'type'" />
           <commodity-management v-if="activeTab === 'commodity'" />
           <order-management v-if="activeTab === 'order'" />
@@ -27,17 +28,20 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import DashBoard from './DashBoard.vue';
 import TypeManagementTable from './TypeManagementTable.vue';
 import CommodityManagement from './CommodityManagement.vue';
 import OrderManagement from './OrderManagement.vue';
 
-const activeTab = ref('type'); // 初始激活的表格类型
+const activeTab = ref('dash'); // 初始激活的表格类型
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
+
 const onMenuSelect = (event: any) => {
   const key = event.key;
   switch (key) {
-    case '1': // 假设数据统计不直接关联到一个表格，所以不做处理
+    case '1':
+      activeTab.value = 'dash';
       break;
     case '2':
       activeTab.value = 'type';

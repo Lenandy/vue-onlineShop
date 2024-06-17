@@ -3,6 +3,7 @@ import ShopView from "../views/ShopView.vue";
 import ItemView from "../views/ItemView.vue";
 import CartView from "../views/CartView.vue";
 import AdministratorHomepage from "../views/AdministratorHomepage.vue";
+import DashBoard from "../views/DashBoard.vue";
 import login from "../views/login.vue";
 
 const router = createRouter({
@@ -30,6 +31,12 @@ const router = createRouter({
       path: "/ad_homepage",
       name: "ad_homepage",
       component: AdministratorHomepage,
+      meta: { hideHeader: true },
+    },
+    {
+      path: "/dash",
+      name: "dash",
+      component: DashBoard,
       meta: { hideHeader: true },
     },
     {

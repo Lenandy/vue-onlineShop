@@ -1,61 +1,94 @@
 <template>
-  <div class="login">
-    <div class="form">
-      <h2>登入</h2>
-      <div class="form-field">
-        <label for="login-mail"><i class="fa fa-user"></i></label>
-        <input id="login-mail" type="text" name="mail" placeholder="邮箱账号">
-        <svg>
-          <use href="#svg-check" />
+    <div class="login">
+        <form ref="loginForm" @submit.prevent="onSubmit">
+            <div class="form">
+                <h2>登入</h2>
+                <div class="form-field">
+                    <label for="login-mail"><i class="fa fa-user"></i></label>
+                    <input id="login-mail" type="text" name="mail" placeholder="账号" required>
+                    <svg>
+                        <use href="#svg-check" />
+                    </svg>
+                </div>
+                <div class="form-field">
+                    <label for="login-password"><i class="fa fa-lock"></i></label>
+                    <input id="login-password" type="password" name="password" placeholder="密码" pattern=".{6,}" required>
+                    <svg>
+                        <use href="#svg-check" />
+                    </svg>
+                </div>
+                <button type="submit" class="button">
+                    <div class="arrow-wrapper">
+                        <span class="arrow"></span>
+                    </div>
+                    <p class="button-text">SIGN IN</p>
+                </button>
+            </div>
+            <div class="finished">
+                <svg>
+                    <use href="#svg-check" />
+                </svg>
+            </div>
+        </form>
+        <svg style="display:none;">
+            <symbol id="svg-check" viewBox="0 0 130.2 130.2">
+                <polyline points="100.2,40.2 51.5,88.8 29.8,67.5"/>
+            </symbol>
         </svg>
-      </div>
-      <div class="form-field">
-        <label for="login-password"><i class="fa fa-lock"></i></label>
-        <input id="login-password" type="password" name="password" placeholder="密码" pattern=".{6,}" required>
-        <svg>
-          <use href="#svg-check" />
-        </svg>
-      </div>
-      <button type="submit" class="button">
-        <div class="arrow-wrapper">
-          <span class="arrow"></span>
-        </div>
-        <p class="button-text">SIGN IN</p>
-      </button>
     </div>
-    <div class="finished">
-      <svg>
-        <use href="#svg-check" />
-      </svg>
-    </div>
-  </div>
-  <svg style="display:none;">
-    <symbol id="svg-check" viewBox="0 0 130.2 130.2">
-      <polyline points="100.2,40.2 51.5,88.8 29.8,67.5"/>
-    </symbol>
-  </svg>
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
+
 export default {
-  methods: {
-    onSubmit() {
-      this.$refs.loginForm.classList.add('loading'); // 假设loginForm是form的ref
-
-      // 使用setTimeout模拟原生的delay效果，Vue推荐这种方式处理异步UI更新
-      setTimeout(() => {
-        this.$refs.loginForm.classList.add('active');
-      }, 2200);
-
-      // 再次使用setTimeout来模拟延迟跳转
-      setTimeout(() => {
-        this.navigateToIndex();
-      }, 4400); // 总共等待4.4秒后跳转，因为有两个2.2秒的延迟
+    mounted() {
+        document.body.style.background = "linear-gradient(135deg, #4D4E63, #333342)";
     },
-    navigateToIndex() {
-      window.location.href = "./index.html";
+    setup() {
+        const loginForm = ref(null);
+
+        const onSubmit = (event) => {
+            event.preventDefault(); // 阻止表单默认提交行为
+
+            // 固定的账号密码组合
+            const fixedAccounts = [
+                { username: 'user', password: 'user123', role: 'user', redirect: '/' },
+                { username: 'admin', password: 'admin123', role: 'admin', redirect: '/ad_homepage' },
+            ];
+
+            const enteredMail = event.target.mail.value;
+            const enteredPassword = event.target.password.value;
+
+            // 验证账号密码
+            const matchedAccount = fixedAccounts.find(account =>
+                account.username === enteredMail && account.password === enteredPassword
+            );
+
+            if (matchedAccount) {
+                // 账号匹配成功，根据角色跳转页面
+                setTimeout(() => {
+                    loginForm.value.classList.add('loading');
+                }, 200);
+
+                setTimeout(() => {
+                    loginForm.value.classList.add('active');
+                    navigateTo(matchedAccount.redirect);
+                }, 2200); // 直接等待2.2秒后执行跳转，简化了之前的延迟逻辑
+            } else {
+                alert('账号或密码错误！');
+            }
+        };
+
+        const navigateTo = (route) => {
+            window.location.href = route;
+        };
+
+        return {
+            loginForm,
+            onSubmit,
+        };
     }
-  }
 }
 </script>
 
