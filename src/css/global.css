@@ -6,3 +6,10 @@
         padding: 0 !important;
     }
 }
+
+button, [type='button'], [type='reset'], [type='submit'] {
+    -webkit-appearance: button;
+    background-color: #4568ff; /* 设置背景色为蓝色 */
+    color: white; /* 可选：设置文字颜色为白色以确保可读性 */
+    background-image: none;
+}
