@@ -5,12 +5,14 @@ import CartView from "../views/CartView.vue";
 import AdministratorHomepage from "../views/AdministratorHomepage.vue";
 import DashBoard from "../views/DashBoard.vue";
 import login from "../views/login.vue";
+import MyOrder from "@/views/myorder.vue";
+import FinishOrder from "@/views/FinishOrder.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: "/shop",
       name: "shop",
       component: ShopView,
       meta: { hideHeader: false },
@@ -40,11 +42,23 @@ const router = createRouter({
       meta: { hideHeader: true },
     },
     {
-      path: "/login",
+      path: "/",
       name: "login",
       component: login,
       meta: { hideHeader: true },
-    }
+    },
+    {
+      path: "/myorder",
+      name: "myorder",
+      component: MyOrder,
+      meta: { hideHeader: false },
+    },
+    {
+      path: "/finish_order",
+      name: "finishorder",
+      component: FinishOrder,
+      meta: { hideHeader: false },
+    },
   ]
 })
 
