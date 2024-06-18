@@ -6,19 +6,19 @@
       :items="[
         {
           title: '待付款',
-          description: 'This is a description.',
+          description: 'ing...',
         },
         {
           title: '已付款',
-          description: 'This is a description.',
+          description: 'ing...',
         },
         {
           title: '快递中',
-          description: 'This is a description.',
+          description: 'ing...',
         },
         {
           title: '已收货',
-          description: 'This is a description.',
+          description: 'ing...',
         },
       ]"
     ></a-steps>

@@ -1,7 +1,7 @@
 <script setup>
 import { ShoppingBagIcon } from "@heroicons/vue/24/outline";
 import { useShopStore } from "../stores/shop";
-
+import { UserOutlined, OrderedListOutlined } from '@ant-design/icons-vue';
 const shop = useShopStore();
 </script>
 
@@ -13,9 +13,29 @@ const shop = useShopStore();
       </svg>
     </RouterLink>
 
+    <RouterLink class="icon" to="/user">
+      <UserOutlined class="h-6 w-6" style="transform: scale(1.2);"/>
+    </RouterLink>
+
     <RouterLink class="flex gap-2 text-gray-500 hover:text-black" to="/cart">
       <ShoppingBagIcon class="h-6 w-6" />
       <span class="text-black">{{ shop.cartQuantity }}</span>
     </RouterLink>
+
+    <RouterLink class="icon" to="/myorder">
+      <OrderedListOutlined class="h-6 w-6" style="transform: scale(1.2);"/>
+    </RouterLink>
   </div>
 </template>
+
+<style scoped>
+.icons-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 调整间距以使图标靠近，根据需要可以减小这个值 */
+}
+.icon {
+  width: 24px !important; /* 确保所有图标大小一致，如果有需要也可以调整高度 */
+  height: 24px !important;
+}
+</style>

@@ -79,7 +79,7 @@ const proceedToPayment = () => {
     </div>
 
     <div v-else class="mt-10">
-      啥也没有,暂时
+      <a-empty />
     </div>
   </div>
 </template>
