@@ -25,6 +25,8 @@ const shop = useShopStore();
     <RouterLink class="icon" to="/myorder">
       <OrderedListOutlined class="h-6 w-6" style="transform: scale(1.2);"/>
     </RouterLink>
+
+    <router-link to="/contact-us">联系我们</router-link>
   </div>
 </template>
 

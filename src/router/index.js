@@ -7,6 +7,7 @@ import DashBoard from "../views/DashBoard.vue";
 import login from "../views/login.vue";
 import MyOrder from "@/views/myorder.vue";
 import FinishOrder from "@/views/FinishOrder.vue";
+import ContactUs from '../components/ContactUs.vue'; // 引入新组件
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +60,11 @@ const router = createRouter({
       component: FinishOrder,
       meta: { hideHeader: false },
     },
+    {
+      path: '/contact-us',
+      name: 'ContactUs',
+      component: ContactUs,
+    }
   ]
 })
 
