@@ -1,7 +1,7 @@
 <script setup>
 import { ShoppingBagIcon } from "@heroicons/vue/24/outline";
 import { useShopStore } from "../stores/shop";
-import { UserOutlined, OrderedListOutlined } from '@ant-design/icons-vue';
+import { UserOutlined, OrderedListOutlined, SendOutlined } from '@ant-design/icons-vue';
 const shop = useShopStore();
 </script>
 
@@ -26,7 +26,9 @@ const shop = useShopStore();
       <OrderedListOutlined class="h-6 w-6" style="transform: scale(1.2);"/>
     </RouterLink>
 
-    <router-link to="/contact-us">联系我们</router-link>
+    <RouterLink class="icon contact-icon" to="/contact-us">
+      <SendOutlined />
+    </RouterLink>
   </div>
 </template>
 
@@ -39,5 +41,15 @@ const shop = useShopStore();
 .icon {
   width: 24px !important; /* 确保所有图标大小一致，如果有需要也可以调整高度 */
   height: 24px !important;
+}
+.contact-icon { /* 添加一个特定类名以针对'联系我们'图标设置样式 */
+  width: 24px;
+  height: 24px;
+  color: inherit; /* 使图标颜色继承父元素的文字颜色 */
+  transition: transform 0.3s ease; /* 平滑的过渡效果，当鼠标悬停或其他交互时可考虑添加 */
+}
+.contact-icon:hover {
+  transform: translateY(-2px); /* 示例：轻微上移，增加立体感或点击感 */
+  cursor: pointer;
 }
 </style>
