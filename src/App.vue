@@ -1,4 +1,3 @@
- template
 <template>
   <div class="container mx-auto p-5 md:p-10 flex flex-col gap-10">
     <!-- 根据shouldHideHeader的值决定是否渲染SiteHeader组件 -->
