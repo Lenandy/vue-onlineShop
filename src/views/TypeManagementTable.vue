@@ -1,17 +1,17 @@
 <template>
   <div>
+    <!-- 点击按钮以添加新的行数据 -->
     <a-button class="editable-add-btn" style="margin-bottom: 8px" @click="handleAdd">
       增加
     </a-button>
 
-    <!-- 表格组件，整合编辑和分页功能 -->
+    <!-- 表格展示编辑前的数据，支持新增、编辑和删除操作 -->
     <a-table :columns="columns" :data-source="dataSource"  bordered :pagination="paginationConfig">
-      <!-- 自定义单元格内容 -->
       <template #bodyCell="{ column, text, record }">
-        <!-- 对于可编辑的列 -->
+        <!-- 判断列是否可编辑 -->
         <template v-if="[ 'name', 'num', 'address' ].indexOf(column.dataIndex) !== -1">
           <div class="editable-cell">
-            <!-- 编辑模式 -->
+            <!-- 当前单元格处于编辑状态时的显示 -->
             <div v-if="editableData[record.key]" class="editable-cell-input-wrapper">
               <a-input
                 v-model:value="editableData[record.key][column.dataIndex]"
@@ -19,29 +19,30 @@
               />
               <check-outlined class="editable-cell-icon-check" @click="save(record.key)" />
             </div>
-            <!-- 非编辑模式 -->
+            <!-- 当前单元格处于查看状态时的显示 -->
             <div v-else class="editable-cell-text-wrapper">
               {{ text || ' ' }}
               <edit-outlined class="editable-cell-icon" @click="edit(record.key)" />
             </div>
           </div>
         </template>
+        <!-- 操作列，提供编辑和删除按钮 -->
         <template v-else-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
-    <span v-if="editableData[record.key]">
-      <a-typography-link @click="save(record.key)">保存</a-typography-link>
-      <!-- 修改了弹窗文案和按钮文案，确保逻辑清晰 -->
-      <a-popconfirm title="确认保存更改吗？" ok-text="确认" cancel-text="取消" :show-cancel-button="true" @confirm="save(record.key)" @cancel="cancel(record.key)">
-        <a>取消</a>
-      </a-popconfirm>
-    </span>
+            <!-- 当前行处于编辑状态时的操作 -->
+            <span v-if="editableData[record.key]">
+              <a-typography-link @click="save(record.key)">保存</a-typography-link>
+              <a-popconfirm title="确认保存更改吗？" ok-text="确认" cancel-text="取消" :show-cancel-button="true" @confirm="save(record.key)" @cancel="cancel(record.key)">
+                <a>取消</a>
+              </a-popconfirm>
+            </span>
+            <!-- 当前行处于查看状态时的操作 -->
             <span v-else>
-      <a @click="edit(record.key)">编辑</a>
-              <!-- 确保删除操作的文案和逻辑清晰 -->
-      <a-popconfirm title="确定删除这条记录吗？" ok-text="删除" cancel-text="取消" @confirm="onDelete(record.key)">
-        <a>删除</a>
-      </a-popconfirm>
-    </span>
+              <a @click="edit(record.key)">编辑</a>
+              <a-popconfirm title="确定删除这条记录吗？" ok-text="删除" cancel-text="取消" @confirm="onDelete(record.key)">
+                <a>删除</a>
+              </a-popconfirm>
+            </span>
           </div>
         </template>
       </template>
@@ -49,12 +50,14 @@
   </div>
 </template>
 
+
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue';
 import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
 import { cloneDeep } from 'lodash-es';
 import { paginationConfig } from "ant-design-vue/es/pagination";
 
+// 定义表格的列配置
 // 定义列
 const columns = [
   {
@@ -77,6 +80,7 @@ const columns = [
 ];
 
 // 初始化数据源
+// 初始化数据源
 const dataSource = ref<DataItem[]>([]);
 for (let i = 0; i < 5; i++) {
   dataSource.value.push({
@@ -87,36 +91,55 @@ for (let i = 0; i < 5; i++) {
   });
 }
 
-// 编辑数据的存储
+/**
+ * 可编辑的数据对象，用于存储数据源中的项在编辑状态下的副本。
+ */
 const editableData: Record<string, any> = reactive({});
 
-// 编辑行
+/**
+ * 开始编辑指定键对应的项。
+ * @param {string} key 需要进入编辑状态的项的键。
+ */
 const edit = (key: string) => {
+  // 复制数据源中对应键的项到editableData，以便在不修改原始数据的情况下进行编辑。
   editableData[key] = cloneDeep(dataSource.value.find(item => key === item.key));
 };
 
-// 保存编辑
+/**
+ * 保存编辑后的项回数据源。
+ * @param {string} key 编辑项的键。
+ */
 const save = (key: string) => {
+  // 查找数据源中对应键的项。
   const record = dataSource.value.find(item => key === item.key);
   if (record) {
+    // 将editableData中编辑后的数据合并到原始记录中，完成保存。
+    // 同时，删除editableData中对应的项，因为编辑已经完成。
     Object.assign(record, editableData[key]);
     delete editableData[key];
   }
 };
 
-// 取消编辑
+
+/**
+ * 删除指定键对应的可编辑数据项。
+ * @param {string} key - 要删除的数据项的键。
+ */
 const cancel = (key: string) => {
   delete editableData[key];
 };
 
-// 删除行
+/**
+ * 从数据源中移除指定键的数据项。
+ * @param {string} key - 要移除的数据项的键。
+ */
 const onDelete = (key: string) => {
   dataSource.value = dataSource.value.filter(item => item.key !== key);
 };
 
-// 确认对话框的确认操作
-
-// 添加新行
+/**
+ * 添加一个新的数据项到数据源中。
+ */
 const handleAdd = () => {
   const newKey = `${dataSource.value.length}`;
   const newData: DataItem = {
@@ -128,14 +151,25 @@ const handleAdd = () => {
   dataSource.value.push(newData);
 };
 
-// 类型定义
+
+
+/**
+ * DataItem 接口定义了数据对象的结构。
+ *
+ * @property {string} key - 数据项的唯一标识符。
+ * @property {string} name - 数据项的名称。
+ * @property {number} num - 数据项的数值，用于统计或排序。
+ * @property {string} address - 数据项的地址信息。
+ */
 interface DataItem {
   key: string;
   name: string;
   num: number;
   address: string;
 }
+
 </script>
+
 
 <style lang="less" scoped>
 .editable-row-operations a {

@@ -1,8 +1,10 @@
 <template>
     <div class="login">
+        <!-- 登录表单，用于收集用户输入的登录信息并处理登录逻辑 -->
         <form ref="loginForm" @submit.prevent="onSubmit">
             <div class="form">
                 <h2>登入</h2>
+                <!-- 用户名输入框，要求必填 -->
                 <div class="form-field">
                     <label for="login-mail"><i class="fa fa-user"></i></label>
                     <input id="login-mail" type="text" name="mail" placeholder="账号" required>
@@ -10,6 +12,7 @@
                         <use href="#svg-check" />
                     </svg>
                 </div>
+                <!-- 密码输入框，要求必填且长度至少为6位 -->
                 <div class="form-field">
                     <label for="login-password"><i class="fa fa-lock"></i></label>
                     <input id="login-password" type="password" name="password" placeholder="密码" pattern=".{6,}" required>
@@ -17,6 +20,7 @@
                         <use href="#svg-check" />
                     </svg>
                 </div>
+                <!-- 登录按钮，提交表单 -->
                 <button type="submit" class="button">
                     <div class="arrow-wrapper">
                         <span class="arrow"></span>
@@ -24,12 +28,14 @@
                     <p class="button-text">SIGN IN</p>
                 </button>
             </div>
+            <!-- 登录成功提示图标，隐藏展示，用于前端验证成功时显示 -->
             <div class="finished">
                 <svg>
                     <use href="#svg-check" />
                 </svg>
             </div>
         </form>
+        <!-- SVG图形定义，包含一个复选标记图标，用于表单验证成功时的视觉反馈 -->
         <svg style="display:none;">
             <symbol id="svg-check" viewBox="0 0 130.2 130.2">
                 <polyline points="100.2,40.2 51.5,88.8 29.8,67.5"/>
@@ -42,30 +48,43 @@
 import { ref, onMounted } from 'vue';
 
 export default {
+    // 页面加载时改变背景颜色
     mounted() {
         document.body.style.background = "linear-gradient(135deg, #4D4E63, #333342)";
     },
     setup() {
+        // 登录表单的根元素引用
         const loginForm = ref(null);
 
+        /**
+         * 处理表单提交事件
+         * @param {Object} event - 表单提交事件对象
+         * 阻止表单默认提交行为，使用固定的账号密码进行验证，
+         * 如果验证通过，根据账号角色跳转到不同的页面。
+         */
         const onSubmit = (event) => {
             event.preventDefault(); // 阻止表单默认提交行为
 
+            // 定义固定的账号密码及角色和跳转页面信息
             // 固定的账号密码组合
             const fixedAccounts = [
                 { username: 'user', password: 'user123', role: 'user', redirect: '/shop' },
                 { username: 'admin', password: 'admin123', role: 'admin', redirect: '/ad_homepage' },
             ];
 
+            // 获取输入的邮箱和密码
             const enteredMail = event.target.mail.value;
             const enteredPassword = event.target.password.value;
 
+            // 遍历固定账号列表，查找匹配的账号信息
             // 验证账号密码
             const matchedAccount = fixedAccounts.find(account =>
                 account.username === enteredMail && account.password === enteredPassword
             );
 
+            // 如果找到匹配的账号信息
             if (matchedAccount) {
+                // 模拟登录加载效果
                 // 账号匹配成功，根据角色跳转页面
                 setTimeout(() => {
                     loginForm.value.classList.add('loading');
@@ -73,17 +92,25 @@ export default {
 
                 setTimeout(() => {
                     loginForm.value.classList.add('active');
+                    // 跳转到匹配账号的角色页面
                     navigateTo(matchedAccount.redirect);
                 }, 220); // 直接等待2.2秒后执行跳转，简化了之前的延迟逻辑
             } else {
+                // 如果账号或密码错误，弹出警告
                 alert('账号或密码错误！');
             }
         };
 
+        /**
+         * 页面跳转函数
+         * @param {string} route - 要跳转的页面路径
+         * 使用window.location.href实现页面跳转
+         */
         const navigateTo = (route) => {
             window.location.href = route;
         };
 
+        // 返回loginForm和onSubmit到模板使用
         return {
             loginForm,
             onSubmit,
@@ -91,6 +118,7 @@ export default {
     }
 }
 </script>
+
 
 <style lang="scss" scoped>
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300);

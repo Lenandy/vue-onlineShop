@@ -1,7 +1,10 @@
 <template>
   <div>
+    <!-- 使用Ant Design Vue的表格组件展示数据，包括列定义、数据源和分页配置 -->
     <a-table :columns="columns" :data-source="dataSource" bordered :pagination="paginationConfig">
+      <!-- 定义表格单元格的自定义渲染 -->
       <template #bodyCell="{ column, text, record }">
+        <!-- 对于特定列（name、num、money），如果文本为空，则显示'-' -->
         <!-- 对于非操作列，如果text为空，则显示'-' -->
         <div
           v-if="['name', 'num', 'money'].indexOf(column.dataIndex) && !text"
@@ -10,6 +13,7 @@
           {{ '-' }}
         </div>
 
+        <!-- 对于操作列，显示删除按钮，通过弹出确认框确认删除操作 -->
         <!-- 特别处理操作列，直接展示删除按钮 -->
         <template v-else-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
@@ -24,6 +28,7 @@
           </div>
         </template>
 
+        <!-- 对于其他列，正常显示文本内容 -->
         <!-- 如果是其他列且有文本内容，正常显示文本 -->
         <div v-else class="editable-cell-text-wrapper">
           {{ text }}
@@ -33,15 +38,30 @@
   </div>
 </template>
 
+
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { paginationConfig } from "ant-design-vue/es/pagination";
 
+/**
+ * 生成唯一的订单号
+ *
+ * 该函数通过结合当前时间戳和一个随机数来生成一个唯一的订单号。
+ * 时间戳保证了每个订单号在时间上的唯一性，而随机数则确保了在相同时间戳下也能产生不同的订单号。
+ * 这种方法适用于简单场景下对订单号唯一性要求不高的应用。
+ *
+ * @returns {string} 由时间戳和随机数组成的唯一订单号
+ */
 const generateOrderId = () => {
-  const timestamp = new Date().getTime(); // 获取当前时间的时间戳
-  const randomNum = Math.floor(Math.random() * 1000); // 生成0-999之间的随机数
-  return `${timestamp}-${randomNum}`; // 结合时间戳和随机数生成订单号
+  // 获取当前时间的时间戳，用于订单号的生成，确保时间上的唯一性
+  const timestamp = new Date().getTime();
+  // 生成一个0到999之间的随机数，用于在相同时间戳下增加订单号的唯一性
+  const randomNum = Math.floor(Math.random() * 1000);
+  // 将时间戳和随机数结合，形成最终的订单号
+  // 返回`${timestamp}-${randomNum}`; // 结合时间戳和随机数生成订单号
+  return `${timestamp}-${randomNum}`;
 };
+
 // 定义列，移除了编辑列
 const columns = [
   {
@@ -142,10 +162,19 @@ const dataSource = ref([
   },
 ]);
 
-// 删除行
+/**
+ * 删除列表中特定项的函数。
+ *
+ * 该函数通过过滤数据源数组，移除具有特定键值的项，从而实现从列表中删除该项的功能。
+ * 它不直接修改原数组，而是创建一个新数组，新数组不包含被删除的项。
+ *
+ * @param {string} key - 要删除的项的键值。键值唯一标识列表中的每一项。
+ * @returns {void} 该函数没有返回值，但它通过修改 `dataSource` 的值来产生效果。
+ */
 const onDelete = (key: string) => {
   dataSource.value = dataSource.value.filter(item => item.key !== key);
 };
+
 
 </script>
 

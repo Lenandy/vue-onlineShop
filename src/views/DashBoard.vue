@@ -63,7 +63,6 @@ function createCharts() {
     });
     piePlot.render();
 
-    // 注意：直接在模板中使用ElTable显示表格，无需在此处创建实例
 
     // 创建时间序列图实例
     const linePlot = new Line(lineChartRef.value, {
