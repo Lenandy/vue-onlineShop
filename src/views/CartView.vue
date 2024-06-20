@@ -1,13 +1,17 @@
 <script setup>
 import { XMarkIcon } from "@heroicons/vue/24/outline";
 import { useShopStore } from "../stores/shop";
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const shop = useShopStore();
+const proceedToPayment = () => {
+  router.push('/finish_order'); // 使用router.push进行页面跳转
+};
 </script>
 
 <template>
   <div>
-    <h2 class="text-2xl">Shopping Cart</h2>
+    <h2 class="text-2xl">购物车</h2>
     
     <div v-if="shop.cartQuantity > 0" class="flex flex-col lg:flex-row lg:gap-6">
       <div class="divide-y divide-gray-300 lg:w-2/3">
@@ -41,38 +45,41 @@ const shop = useShopStore();
       </div>
 
       <div class="bg-gray-100 rounded-md p-6 lg:w-1/3 flex flex-col gap-6">
-        <h3 class="text-lg">Order summary</h3>
+        <h3 class="text-lg">金额总览</h3>
 
         <div class="divide-y divide-gray-300">
           <div class="py-3 flex justify-between">
-            <div>Subtotal</div>
+            <div>价钱</div>
             <div>${{ shop.cartSubtotal / 100 }}</div>
           </div>
 
           <div class="py-3 flex justify-between">
-            <div>Shipping</div>
+            <div>运费</div>
             <div>${{ shop.cartShipping / 100 }}</div>
           </div>
 
           <div class="py-3 flex justify-between">
-            <div>Tax</div>
+            <div>服务费</div>
             <div>${{ (shop.cartTax / 100).toFixed(2) }}</div>
           </div>
 
           <div class="py-3 flex justify-between font-bold">
-            <div>Order total</div>
+            <div>订单总金额</div>
             <div>${{ (shop.cartTotal / 100).toFixed(2) }}</div>
           </div>
         </div>
 
-        <button class="flex justify-center bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-500 text-white rounded-md p-3 w-full">
-          Checkout
+        <button
+          class="flex justify-center bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-500 text-white rounded-md p-3 w-full"
+          @click="proceedToPayment"
+        >
+          付款
         </button>
       </div>
     </div>
 
     <div v-else class="mt-10">
-      Nothing here, yet!
+      <a-empty />
     </div>
   </div>
 </template>

@@ -32,9 +32,9 @@ const addToCart = () => {
         <transition mode="out-in">
           <div v-if="shop.addedMessageShown" class="flex gap-2">
             <CheckIcon class="w-6 h-6" />
-            Added to cart!
+            已经加入购物车！
           </div>
-          <div v-else>Add to cart</div>
+          <div v-else>加入购物车</div>
         </transition>
       </button>
     </div>

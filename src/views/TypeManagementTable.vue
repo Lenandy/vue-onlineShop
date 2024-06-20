@@ -9,7 +9,7 @@
       <!-- 自定义单元格内容 -->
       <template #bodyCell="{ column, text, record }">
         <!-- 对于可编辑的列 -->
-        <template v-if="[ 'name', 'age', 'address' ].indexOf(column.dataIndex) !== -1">
+        <template v-if="[ 'name', 'num', 'address' ].indexOf(column.dataIndex) !== -1">
           <div class="editable-cell">
             <!-- 编辑模式 -->
             <div v-if="editableData[record.key]" class="editable-cell-input-wrapper">
@@ -81,7 +81,7 @@ const dataSource = ref<DataItem[]>([]);
 for (let i = 0; i < 5; i++) {
   dataSource.value.push({
     key: i.toString(),
-    name: `手机 ${i}`,
+    name: `服装种类 ${i}`,
     num: 66,
     address: `虚空`,
   });
@@ -115,18 +115,15 @@ const onDelete = (key: string) => {
 };
 
 // 确认对话框的确认操作
-const confirm = () => {
-  // 根据需要实现确认逻辑
-};
 
 // 添加新行
 const handleAdd = () => {
   const newKey = `${dataSource.value.length}`;
   const newData: DataItem = {
     key: newKey,
-    name: `New User ${newKey}`,
+    name: `服装种类 ${newKey}`,
     num: 32,
-    address: 'New Address',
+    address: '虚空',
   };
   dataSource.value.push(newData);
 };

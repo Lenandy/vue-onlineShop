@@ -53,7 +53,7 @@ export default {
 
             // 固定的账号密码组合
             const fixedAccounts = [
-                { username: 'user', password: 'user123', role: 'user', redirect: '/' },
+                { username: 'user', password: 'user123', role: 'user', redirect: '/shop' },
                 { username: 'admin', password: 'admin123', role: 'admin', redirect: '/ad_homepage' },
             ];
 
@@ -74,7 +74,7 @@ export default {
                 setTimeout(() => {
                     loginForm.value.classList.add('active');
                     navigateTo(matchedAccount.redirect);
-                }, 2200); // 直接等待2.2秒后执行跳转，简化了之前的延迟逻辑
+                }, 220); // 直接等待2.2秒后执行跳转，简化了之前的延迟逻辑
             } else {
                 alert('账号或密码错误！');
             }

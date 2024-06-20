@@ -4,7 +4,7 @@
       <template #bodyCell="{ column, text, record }">
         <!-- 对于非操作列，如果text为空，则显示'-' -->
         <div
-          v-if="['name', 'age', 'address'].indexOf(column.dataIndex) && !text"
+          v-if="['name', 'num', 'money'].indexOf(column.dataIndex) && !text"
           class="editable-cell-text-wrapper"
         >
           {{ '-' }}
@@ -72,72 +72,72 @@ const columns = [
 const dataSource = ref([
   {
     key: generateOrderId(),
-    name: '华为手机',
+    name: '经典牛仔夹克',
     num: '3',
-    money: '$1000',
+    money: '$100',
     operation: '删除'
   },
   {
     key: generateOrderId(),
-    name: '苹果iPad',
-    num: '2',
-    money: '$800',
-    operation: '删除'
-  },
-  {
-    key: generateOrderId(),
-    name: '小米电视',
-    num: '1',
-    money: '$500',
-    operation: '删除'
-  },
-  {
-    key: generateOrderId(),
-    name: '索尼耳机',
-    num: '5',
-    money: '$200',
-    operation: '删除'
-  },
-  {
-    key: generateOrderId(),
-    name: '联想笔记本',
-    num: '1',
-    money: '$1200',
-    operation: '删除'
-  },
-  {
-    key: generateOrderId(),
-    name: '三星智能手表',
-    num: '4',
-    money: '$300',
-    operation: '删除'
-  },
-  {
-    key: generateOrderId(),
-    name: '佳能相机',
-    num: '1',
-    money: '$700',
-    operation: '删除'
-  },
-  {
-    key: generateOrderId(),
-    name: '戴森吹风机',
+    name: '运动跑步鞋',
     num: '2',
     money: '$150',
     operation: '删除'
   },
   {
     key: generateOrderId(),
-    name: '博朗剃须刀',
-    num: '3',
-    money: '$60',
+    name: '休闲连帽衫',
+    num: '1',
+    money: '$80',
     operation: '删除'
   },
   {
     key: generateOrderId(),
-    name: 'GoPro运动相机',
+    name: '高腰直筒牛仔裤',
+    num: '5',
+    money: '$70',
+    operation: '删除'
+  },
+  {
+    key: generateOrderId(),
+    name: '轻薄羽绒服',
     num: '1',
-    money: '$400',
+    money: '$200',
+    operation: '删除'
+  },
+  {
+    key: generateOrderId(),
+    name: '复古圆领T恤',
+    num: '4',
+    money: '$30',
+    operation: '删除'
+  },
+  {
+    key: generateOrderId(),
+    name: '商务休闲裤',
+    num: '1',
+    money: '$90',
+    operation: '删除'
+  },
+  {
+    key: generateOrderId(),
+    name: '时尚棒球帽',
+    num: '2',
+    money: '$20',
+    operation: '删除'
+  },
+  {
+    key: generateOrderId(),
+    name: '运动束脚裤',
+    num: '3',
+    money: '$50',
+    operation: '删除'
+  },
+  {
+    key: generateOrderId(),
+    name: '女士丝绸围巾',
+    num: '1',
+    money: '$60',
     operation: '删除'
   },
 ]);

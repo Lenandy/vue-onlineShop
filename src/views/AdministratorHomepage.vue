@@ -32,7 +32,10 @@ import DashBoard from './DashBoard.vue';
 import TypeManagementTable from './TypeManagementTable.vue';
 import CommodityManagement from './CommodityManagement.vue';
 import OrderManagement from './OrderManagement.vue';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6f1adb9b9b96fc4b75aacc1b679dbc924e252cd7
 const activeTab = ref('dash'); // 初始激活的表格类型
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);

@@ -81,7 +81,7 @@ const dataSource = ref<DataItem[]>([]);
 for (let i = 0; i < 10; i++) {
   dataSource.value.push({
     key: i.toString(),
-    name: `小米 ${i}`,
+    name: `服装 ${i}`,
     num: 88,
     address: '村民家里',
   });
@@ -119,7 +119,7 @@ const handleAdd = () => {
   const newKey = `${dataSource.value.length}`;
   const newData: DataItem = {
     key: newKey,
-    name: `小米 ${newKey}`,
+    name: `服装 ${newKey}`,
     num: 88,
     address: '村民家里',
   };
