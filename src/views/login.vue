@@ -1,8 +1,11 @@
+ template
 <template>
     <div class="login">
+        <!-- 登录表单，用于收集用户输入的登录信息并处理登录逻辑 -->
         <form ref="loginForm" @submit.prevent="onSubmit">
             <div class="form">
                 <h2>登入</h2>
+                <!-- 用户名输入框，要求必填 -->
                 <div class="form-field">
                     <label for="login-mail"><i class="fa fa-user"></i></label>
                     <input id="login-mail" type="text" name="mail" placeholder="账号" required>
@@ -10,6 +13,7 @@
                         <use href="#svg-check" />
                     </svg>
                 </div>
+                <!-- 密码输入框，要求必填且长度至少为6位 -->
                 <div class="form-field">
                     <label for="login-password"><i class="fa fa-lock"></i></label>
                     <input id="login-password" type="password" name="password" placeholder="密码" pattern=".{6,}" required>
@@ -17,6 +21,7 @@
                         <use href="#svg-check" />
                     </svg>
                 </div>
+                <!-- 登录按钮，提交表单 -->
                 <button type="submit" class="button">
                     <div class="arrow-wrapper">
                         <span class="arrow"></span>
@@ -24,12 +29,14 @@
                     <p class="button-text">SIGN IN</p>
                 </button>
             </div>
+            <!-- 登录成功提示图标，隐藏展示，用于前端验证成功时显示 -->
             <div class="finished">
                 <svg>
                     <use href="#svg-check" />
                 </svg>
             </div>
         </form>
+        <!-- SVG图形定义，包含一个复选标记图标，用于表单验证成功时的视觉反馈 -->
         <svg style="display:none;">
             <symbol id="svg-check" viewBox="0 0 130.2 130.2">
                 <polyline points="100.2,40.2 51.5,88.8 29.8,67.5"/>
@@ -37,6 +44,7 @@
         </svg>
     </div>
 </template>
+
 
 <script>
 import { ref, onMounted } from 'vue';

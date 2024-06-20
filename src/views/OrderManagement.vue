@@ -1,16 +1,20 @@
+ template
 <template>
   <div>
+    <!-- 使用Ant Design Vue的表格组件展示数据，包括列定义和数据源 -->
     <a-table :columns="columns" :data-source="dataSource" bordered :pagination="paginationConfig">
+      <!-- 定义表格单元格的模板，以支持自定义渲染 -->
       <template #bodyCell="{ column, text, record }">
+        <!-- 对于特定列（name, num, money），如果文本为空，则显示'-' -->
         <!-- 对于非操作列，如果text为空，则显示'-' -->
         <div
-          v-if="['name', 'num', 'money'].indexOf(column.dataIndex) && !text"
+          v-if="['name', 'num', 'money'].indexOf(column.dataIndex) > -1 && !text"
           class="editable-cell-text-wrapper"
         >
           {{ '-' }}
         </div>
 
-        <!-- 特别处理操作列，直接展示删除按钮 -->
+        <!-- 特别处理操作列，显示删除按钮，并通过弹出确认框确认删除操作 -->
         <template v-else-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
             <a-popconfirm
@@ -32,6 +36,7 @@
     </a-table>
   </div>
 </template>
+
 
 <script lang="ts" setup>
 import { ref } from 'vue';

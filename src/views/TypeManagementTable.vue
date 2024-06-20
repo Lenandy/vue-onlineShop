@@ -1,16 +1,22 @@
+ template
 <template>
   <div>
+    <!-- 点击按钮增加一行数据 -->
     <a-button class="editable-add-btn" style="margin-bottom: 8px" @click="handleAdd">
       增加
     </a-button>
 
+    <!-- 使用表格展示数据，包括编辑和分页功能 -->
     <!-- 表格组件，整合编辑和分页功能 -->
     <a-table :columns="columns" :data-source="dataSource"  bordered :pagination="paginationConfig">
+      <!-- 自定义单元格内容，以支持编辑功能 -->
       <!-- 自定义单元格内容 -->
       <template #bodyCell="{ column, text, record }">
+        <!-- 对于指定的可编辑列 -->
         <!-- 对于可编辑的列 -->
         <template v-if="[ 'name', 'num', 'address' ].indexOf(column.dataIndex) !== -1">
           <div class="editable-cell">
+            <!-- 当单元格处于编辑状态时 -->
             <!-- 编辑模式 -->
             <div v-if="editableData[record.key]" class="editable-cell-input-wrapper">
               <a-input
@@ -19,6 +25,7 @@
               />
               <check-outlined class="editable-cell-icon-check" @click="save(record.key)" />
             </div>
+            <!-- 当单元格处于非编辑状态时 -->
             <!-- 非编辑模式 -->
             <div v-else class="editable-cell-text-wrapper">
               {{ text || ' ' }}
@@ -26,28 +33,34 @@
             </div>
           </div>
         </template>
+        <!-- 操作列，提供编辑和删除功能 -->
         <template v-else-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
-    <span v-if="editableData[record.key]">
-      <a-typography-link @click="save(record.key)">保存</a-typography-link>
-      <!-- 修改了弹窗文案和按钮文案，确保逻辑清晰 -->
-      <a-popconfirm title="确认保存更改吗？" ok-text="确认" cancel-text="取消" :show-cancel-button="true" @confirm="save(record.key)" @cancel="cancel(record.key)">
-        <a>取消</a>
-      </a-popconfirm>
-    </span>
+            <span v-if="editableData[record.key]">
+              <!-- 保存当前行的编辑 -->
+              <a-typography-link @click="save(record.key)">保存</a-typography-link>
+              <!-- 确认保存更改的弹窗 -->
+              <!-- 修改了弹窗文案和按钮文案，确保逻辑清晰 -->
+              <a-popconfirm title="确认保存更改吗？" ok-text="确认" cancel-text="取消" :show-cancel-button="true" @confirm="save(record.key)" @cancel="cancel(record.key)">
+                <a>取消</a>
+              </a-popconfirm>
+            </span>
             <span v-else>
-      <a @click="edit(record.key)">编辑</a>
+              <!-- 开始编辑当前行 -->
+              <a @click="edit(record.key)">编辑</a>
+              <!-- 确认删除当前行的弹窗 -->
               <!-- 确保删除操作的文案和逻辑清晰 -->
-      <a-popconfirm title="确定删除这条记录吗？" ok-text="删除" cancel-text="取消" @confirm="onDelete(record.key)">
-        <a>删除</a>
-      </a-popconfirm>
-    </span>
+              <a-popconfirm title="确定删除这条记录吗？" ok-text="删除" cancel-text="取消" @confirm="onDelete(record.key)">
+                <a>删除</a>
+              </a-popconfirm>
+            </span>
           </div>
         </template>
       </template>
     </a-table>
   </div>
 </template>
+
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue';

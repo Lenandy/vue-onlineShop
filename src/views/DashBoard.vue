@@ -1,15 +1,20 @@
+ template
 <template>
     <div>
+        <!-- 饼图容器：用于展示饼图数据 -->
         <div ref="pieChartRef" class="chart" />
+        <!-- 折线图容器：用于展示折线图数据 -->
         <div ref="lineChartRef" class="chart" />
+        <!-- 数据表格：展示详细的数据列表 -->
         <a-table :dataSource="tableData" :columns="columns" />
     </div>
 </template>
 
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import { Pie, Line } from '@antv/g2plot';
-
+// 使用ref定义饼图和时间序列图的DOM引用
 const pieChartRef = ref(null);
 const lineChartRef = ref(null);
 
@@ -45,6 +50,7 @@ const lineData = [
     { date: 'Sun', sold: 1827 },
 // 更多数据
 ];
+// 当组件挂载时，初始化图表
 onMounted(() => {
     createCharts();
 });
@@ -62,8 +68,6 @@ function createCharts() {
         interactions: [{ type: 'element-active' }],
     });
     piePlot.render();
-
-    // 注意：直接在模板中使用ElTable显示表格，无需在此处创建实例
 
     // 创建时间序列图实例
     const linePlot = new Line(lineChartRef.value, {

@@ -12,7 +12,7 @@ const proceedToPayment = () => {
 <template>
   <div>
     <h2 class="text-2xl">购物车</h2>
-    
+
     <div v-if="shop.cartQuantity > 0" class="flex flex-col lg:flex-row lg:gap-6">
       <div class="divide-y divide-gray-300 lg:w-2/3">
         <div v-for="item in shop.cart" :key="item.id" class="py-6 flex gap-4">

@@ -1,7 +1,10 @@
+ template
 <template>
   <a-layout style="min-height: 100vh">
+    <!-- 侧边栏，包含网站的logo和导航菜单 -->
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
       <div class="logo" />
+      <!-- 导航菜单，根据选中的菜单项改变activeTab的值 -->
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline" @select="onMenuSelect">
         <a-menu-item key="1">数据统计</a-menu-item>
         <a-menu-item key="2">类型管理</a-menu-item>
@@ -9,7 +12,9 @@
         <a-menu-item key="4">订单管理</a-menu-item>
       </a-menu>
     </a-layout-sider>
+    <!-- 主要内容区域，包含页脚 -->
     <a-layout>
+      <!-- 内容区域，根据activeTab的值显示不同的组件 -->
       <a-layout-content style="margin: 0 16px">
         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px', minWidth: '500px', overflowY: 'auto' }">
           <DashBoard v-if="activeTab === 'dash'" />
@@ -18,6 +23,7 @@
           <order-management v-if="activeTab === 'order'" />
         </div>
       </a-layout-content>
+      <!-- 页脚 -->
       <a-layout-footer style="text-align: center">
         Man What Can I Say Hahaha ©2024 Created by Lenandy
       </a-layout-footer>
@@ -33,10 +39,18 @@ import TypeManagementTable from './TypeManagementTable.vue';
 import CommodityManagement from './CommodityManagement.vue';
 import OrderManagement from './OrderManagement.vue';
 
+// 初始化激活的标签页
 const activeTab = ref('dash'); // 初始激活的表格类型
+// 控制侧边栏的折叠状态
 const collapsed = ref(false);
+// 选中的菜单项
 const selectedKeys = ref(['1']);
 
+/**
+ * 当菜单项被选中时触发的函数
+ * @param event 选中的菜单项的事件对象
+ * 根据选中的菜单项改变activeTab的值，以显示对应的内容区域
+ */
 const onMenuSelect = (event: any) => {
   const key = event.key;
   switch (key) {

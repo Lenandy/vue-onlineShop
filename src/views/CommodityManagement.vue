@@ -1,16 +1,21 @@
 <template>
   <div>
+    <!-- 增加按钮，用于添加新的数据行 -->
     <a-button class="editable-add-btn" style="margin-bottom: 8px" @click="handleAdd">
       增加
     </a-button>
 
+    <!-- 表格组件，展示数据并提供编辑功能 -->
     <!-- 表格组件，整合编辑和分页功能 -->
     <a-table :columns="columns" :data-source="dataSource"  bordered :pagination="paginationConfig">
+      <!-- 自定义单元格内容模板，用于实现编辑功能 -->
       <!-- 自定义单元格内容 -->
       <template #bodyCell="{ column, text, record }">
+        <!-- 对于指定的可编辑列 -->
         <!-- 对于可编辑的列 -->
         <template v-if="[ 'name', 'num', 'address' ].indexOf(column.dataIndex) !== -1">
           <div class="editable-cell">
+            <!-- 当单元格处于编辑状态时 -->
             <!-- 编辑模式 -->
             <div v-if="editableData[record.key]" class="editable-cell-input-wrapper">
               <a-input
@@ -19,6 +24,7 @@
               />
               <check-outlined class="editable-cell-icon-check" @click="save(record.key)" />
             </div>
+            <!-- 当单元格处于查看状态时 -->
             <!-- 非编辑模式 -->
             <div v-else class="editable-cell-text-wrapper">
               {{ text || ' ' }}
@@ -26,22 +32,23 @@
             </div>
           </div>
         </template>
+        <!-- 操作列，提供编辑和删除按钮 -->
         <template v-else-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
-    <span v-if="editableData[record.key]">
-      <a-typography-link @click="save(record.key)">保存</a-typography-link>
-      <!-- 修改了弹窗文案和按钮文案，确保逻辑清晰 -->
-      <a-popconfirm title="确认保存更改吗？" ok-text="确认" cancel-text="取消" :show-cancel-button="true" @confirm="save(record.key)" @cancel="cancel(record.key)">
-        <a>取消</a>
-      </a-popconfirm>
-    </span>
+            <span v-if="editableData[record.key]">
+              <a-typography-link @click="save(record.key)">保存</a-typography-link>
+              <!-- 修改了弹窗文案和按钮文案，确保逻辑清晰 -->
+              <a-popconfirm title="确认保存更改吗？" ok-text="确认" cancel-text="取消" :show-cancel-button="true" @confirm="save(record.key)" @cancel="cancel(record.key)">
+                <a>取消</a>
+              </a-popconfirm>
+            </span>
             <span v-else>
-      <a @click="edit(record.key)">编辑</a>
+              <a @click="edit(record.key)">编辑</a>
               <!-- 确保删除操作的文案和逻辑清晰 -->
-      <a-popconfirm title="确定删除这条记录吗？" ok-text="删除" cancel-text="取消" @confirm="onDelete(record.key)">
-        <a>删除</a>
-      </a-popconfirm>
-    </span>
+              <a-popconfirm title="确定删除这条记录吗？" ok-text="删除" cancel-text="取消" @confirm="onDelete(record.key)">
+                <a>删除</a>
+              </a-popconfirm>
+            </span>
           </div>
         </template>
       </template>
@@ -55,6 +62,7 @@ import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
 import { cloneDeep } from 'lodash-es';
 import { paginationConfig } from "ant-design-vue/es/pagination";
 
+// 定义表格的列配置
 // 定义列
 const columns = [
   {
@@ -77,6 +85,7 @@ const columns = [
 ];
 
 // 初始化数据源
+// 初始化数据源
 const dataSource = ref<DataItem[]>([]);
 for (let i = 0; i < 10; i++) {
   dataSource.value.push({
@@ -87,15 +96,16 @@ for (let i = 0; i < 10; i++) {
   });
 }
 
+// 用于存储当前处于编辑状态的行数据
 // 编辑数据的存储
 const editableData: Record<string, any> = reactive({});
 
-// 编辑行
+// 将指定行切换到编辑状态
 const edit = (key: string) => {
   editableData[key] = cloneDeep(dataSource.value.find(item => key === item.key));
 };
 
-// 保存编辑
+// 保存当前编辑状态的行数据
 const save = (key: string) => {
   const record = dataSource.value.find(item => key === item.key);
   if (record) {
@@ -104,17 +114,17 @@ const save = (key: string) => {
   }
 };
 
-// 取消编辑
+// 取消当前编辑状态的行，恢复到查看状态
 const cancel = (key: string) => {
   delete editableData[key];
 };
 
-// 删除行
+// 删除指定行数据
 const onDelete = (key: string) => {
   dataSource.value = dataSource.value.filter(item => item.key !== key);
 };
 
-// 添加新行
+// 添加新行数据
 const handleAdd = () => {
   const newKey = `${dataSource.value.length}`;
   const newData: DataItem = {
@@ -126,6 +136,7 @@ const handleAdd = () => {
   dataSource.value.push(newData);
 };
 
+// 定义数据项的接口
 // 类型定义
 interface DataItem {
   key: string;

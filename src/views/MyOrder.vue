@@ -1,16 +1,22 @@
+ template
 <template>
   <div class="order-list">
+    <!-- 使用Ant Design Vue的Card组件展示我的订单信息 -->
     <a-card title="我的订单">
+      <!-- 使用Ant Design Vue的Table组件展示订单列表数据，包括列定义和数据源 -->
       <a-table :columns="columns" :data-source="orders" bordered :pagination="paginationConfig">
+        <!-- 定义表格单元格的模板，以支持自定义渲染 -->
         <template #bodyCell="{ column, text, record }">
+          <!-- 对于特定列（productName, totalPrice, createdAt），如果文本为空，则显示'-' -->
           <!-- 对于非操作列，如果text为空，则显示'-' -->
           <div
-            v-if="['name', 'age', 'address'].indexOf(column.dataIndex) && !text"
+            v-if="['productName', 'totalPrice', 'createdAt'].indexOf(column.dataIndex) > -1 && !text"
             class="editable-cell-text-wrapper"
           >
             {{ '-' }}
           </div>
 
+          <!-- 特别处理操作列，显示删除按钮，并通过弹出确认框确认删除操作 -->
           <!-- 特别处理操作列，直接展示删除按钮 -->
           <template v-else-if="column.dataIndex === 'operation'">
             <div class="editable-row-operations">
@@ -25,6 +31,7 @@
             </div>
           </template>
 
+          <!-- 对于其他列，正常显示文本内容 -->
           <!-- 如果是其他列且有文本内容，正常显示文本 -->
           <div v-else class="editable-cell-text-wrapper">
             {{ text }}
@@ -34,6 +41,7 @@
     </a-card>
   </div>
 </template>
+
 
 <script lang="ts" setup>
 import { ref } from 'vue';
