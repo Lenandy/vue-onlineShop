@@ -1,0 +1,55 @@
+{
+  "name": "vue-online-store-demo",
+  "version": "2.0.0",
+  "description": "Demo of an online store and shopping cart built with Vue 3.",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/travishorn/vue-online-store-demo.git"
+  },
+  "author": "Travis Horn <travis@travishorn.com> (https://travishorn.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/travishorn/vue-online-store-demo/issues"
+  },
+  "homepage": "https://github.com/travishorn/vue-online-store-demo#readme",
+  "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "@antv/g2plot": "^2.4.31",
+    "@antv/g6": "^5.0.1",
+    "@heroicons/vue": "^2.0.13",
+    "ant-design-vue": "^4.2.3",
+    "echarts": "^5.5.0",
+    "element-plus": "^2.7.5",
+    "less": "^4.2.0",
+    "lodash-es": "^4.17.21",
+    "pinia": "^2.0.28",
+    "sass": "^1.77.5",
+    "vue": "^3.2.45",
+    "vue-echarts": "^6.7.3",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@types/lodash-es": "^4.17.12",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.26.0",
+    "postcss": "^8.4.21",
+    "prettier": "^2.7.1",
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.0.0",
+    "vue-eslint-parser": "^9.4.3"
+  }
+}
